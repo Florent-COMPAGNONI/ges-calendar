@@ -9,7 +9,7 @@ Ges calendar est une application python permettant de récupérer son planning [
 
 Pré-requis:
 - [python 3.10](https://www.python.org/downloads/) ou version ultérieure
-- vos identifiant myGES
+- vos identifiants myGES
 
 Lancer les commandes suivantes pour récupérer le projet et installer les paquets.
 ```
