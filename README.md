@@ -18,7 +18,7 @@ pip install -r ./requirements.txt
 ```
 
 
-Créer un fichier .env à la racine du projet en se basant sur le fichier [.env.templates](./.env.templates)
+Créer un fichier **.env** à la racine du projet en se basant sur le fichier [.env.templates](./.env.templates)
 
 
 ## Utilisation
