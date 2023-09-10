@@ -51,6 +51,34 @@ def extract_access_token(headers: dict) -> str:
     return access_token[0]
 
 
+def get_agenda(access_token: str, start: str, end: str) -> dict:
+    start: datetime = datetime.strptime(start, "%Y-%m-%d")
+    end: datetime = datetime.strptime(end, "%Y-%m-%d")
+    end += relativedelta(months=1)
+
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "User-Agent": USER_AGENT,
+    }
+    params = {
+        "start": int(start.timestamp()) * 1000,
+        "end": int(end.timestamp()) * 1000,
+    }
+
+    response = requests.get(url=AGENDA_ENDPOINT_URL, headers=headers, params=params)
+
+    if response.status_code != 200:
+        print(f"error {response.status_code}")
+
+    response_data = response.json()
+
+    if not response_data:
+        print("no data...")
+
+    return response_data.get("result")
+
+
 if __name__ == "__main__":
     access_token = get_access_token()
-    print(access_token)
+    agenda = get_agenda(access_token, "2023-09-11", "2023-09-17")
+    print(agenda)
