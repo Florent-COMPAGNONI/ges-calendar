@@ -78,7 +78,29 @@ def get_agenda(access_token: str, start: str, end: str) -> dict:
     return response_data.get("result")
 
 
+def create_ics(agenda: dict, start: str, end: str):
+    calendar = Calendar()
+    for items in agenda:
+        event = Event()
+        event.name = items["name"] + " by " + items["teacher"]
+
+        start_date = datetime.fromtimestamp(items["start_date"] / 1000.0)
+        end_date = datetime.fromtimestamp(items["end_date"] / 1000.0)
+
+        event.begin = start_date
+        event.end = end_date
+
+        if items["rooms"]:
+            room = items["rooms"][0]
+            event.location = f"{room['name']}, {room['floor']}, {room['campus']}"
+
+        calendar.events.add(event)
+
+    with open(f"ges_calendar_from_{start}_to_{end}.ics", "w") as f:
+        f.writelines(calendar)
+
+
 if __name__ == "__main__":
     access_token = get_access_token()
     agenda = get_agenda(access_token, "2023-09-11", "2023-09-17")
-    print(agenda)
+    create_ics(agenda, "2023-09-11", "2023-09-17")
