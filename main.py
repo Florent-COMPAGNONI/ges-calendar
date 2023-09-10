@@ -82,7 +82,8 @@ def create_ics(agenda: dict, start: str, end: str):
     calendar = Calendar()
     for items in agenda:
         event = Event()
-        event.name = items["name"] + " by " + items["teacher"]
+        event.name = items["name"]
+        event.description = items["teacher"]
 
         start_date = datetime.fromtimestamp(items["start_date"] / 1000.0)
         end_date = datetime.fromtimestamp(items["end_date"] / 1000.0)
@@ -92,7 +93,7 @@ def create_ics(agenda: dict, start: str, end: str):
 
         if items["rooms"]:
             room = items["rooms"][0]
-            event.location = f"{room['name']}, {room['floor']}, {room['campus']}"
+            event.location = f"{room['name']}, {room['campus']}"
 
         calendar.events.add(event)
 
