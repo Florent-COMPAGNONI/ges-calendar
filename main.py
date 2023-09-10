@@ -1,7 +1,8 @@
 import os
 import requests
+import argparse
 from urllib.parse import urlparse, parse_qs
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from dotenv import load_dotenv
 from ics import Calendar, Event
@@ -101,7 +102,27 @@ def create_ics(agenda: dict, start: str, end: str):
         f.writelines(calendar)
 
 
+def parse_arguments() -> argparse.Namespace:
+    default_start_date = datetime.now().replace(
+        day=1, hour=0, minute=0, second=0, microsecond=0
+    )
+
+    next_month = datetime.now().replace(day=28) + timedelta(days=4)
+    default_end_date = next_month - timedelta(days=next_month.day)
+
+    default_start_date = default_start_date.strftime("%Y-%m-%d")
+    default_end_date = default_end_date.strftime("%Y-%m-%d")
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--start_date", type=str, default=default_start_date)
+    parser.add_argument("--end_date", type=str, default=default_end_date)
+
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
+    args = parse_arguments()
+
     access_token = get_access_token()
-    agenda = get_agenda(access_token, "2023-09-11", "2023-09-17")
-    create_ics(agenda, "2023-09-11", "2023-09-17")
+    agenda = get_agenda(access_token, args.start_date, args.end_date)
+    create_ics(agenda, args.start_date, args.end_date)
