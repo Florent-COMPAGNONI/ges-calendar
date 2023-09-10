@@ -13,14 +13,14 @@ CLIENT_ID = "skolae-app"
 USER_AGENT = "skolae-app-ios/3.5.0 (com.reseauges.skolae.app; build:26; iOS 15.0.1) Alamofire/4.9.1"
 OAUTH_AUTHORIZE_URL = f"https://authentication.kordis.fr/oauth/authorize?client_id={CLIENT_ID}&response_type=token"
 AGENDA_ENDPOINT_URL = "https://api.kordis.fr/me/agenda"
-USERNAME = os.getenv("USERNAME")
+LOGIN = os.getenv("LOGIN")
 PASSWORD = os.getenv("PASSWORD")
 
 
 def get_access_token() -> str:
     response = requests.get(
         url=OAUTH_AUTHORIZE_URL,
-        auth=(USERNAME, PASSWORD),
+        auth=(LOGIN, PASSWORD),
         allow_redirects=False,
     )
 
@@ -114,8 +114,8 @@ def parse_arguments() -> argparse.Namespace:
     default_end_date = default_end_date.strftime("%Y-%m-%d")
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--start_date", type=str, default=default_start_date)
-    parser.add_argument("--end_date", type=str, default=default_end_date)
+    parser.add_argument("--start-date", type=str, default=default_start_date)
+    parser.add_argument("--end-date", type=str, default=default_end_date)
 
     return parser.parse_args()
 
