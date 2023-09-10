@@ -68,12 +68,12 @@ def get_agenda(access_token: str, start: str, end: str) -> dict:
     response = requests.get(url=AGENDA_ENDPOINT_URL, headers=headers, params=params)
 
     if response.status_code != 200:
-        print(f"error {response.status_code}")
+        raise Exception(f"Unable to get the agenda, error {response.status_code}")
 
     response_data = response.json()
 
     if not response_data:
-        print("no data...")
+        raise Exception("No data in the agenda for date {start} to {end}")
 
     return response_data.get("result")
 
