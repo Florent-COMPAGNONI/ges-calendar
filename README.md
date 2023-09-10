@@ -11,11 +11,14 @@ Pré-requis:
 - [python 3.10](https://www.python.org/downloads/) ou version ultérieure
 - vos identifiant myGES
 
+Lancer les commandes suivantes pour récupérer le projet et installer les paquets.
+```
+git clone https://github.com/Florent-COMPAGNONI/ges_calendar.git
+pip install -r ./requirements.txt
+```
 
-Lancer la commande `pip install -r ./requirements.txt` pour installer les paquets.
 
-
-Créer un fichier .env à la racine du projet en se basant sur le fichier .env.templates
+Créer un fichier .env à la racine du projet en se basant sur le fichier [.env.templates](./.env.templates)
 
 
 ## Utilisation
