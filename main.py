@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from dotenv import load_dotenv
 from ics import Calendar, Event
+import pytz
 
 load_dotenv()
 
@@ -86,8 +87,12 @@ def create_ics(agenda: dict, start: str, end: str):
         event.name = items["name"]
         event.description = items["teacher"]
 
-        start_date = datetime.fromtimestamp(items["start_date"] / 1000.0)
-        end_date = datetime.fromtimestamp(items["end_date"] / 1000.0)
+        start_date = datetime.fromtimestamp(
+            items["start_date"] / 1000.0, tz=pytz.timezone("Europe/Paris")
+        )
+        end_date = datetime.fromtimestamp(
+            items["end_date"] / 1000.0, tz=pytz.timezone("Europe/Paris")
+        )
 
         event.begin = start_date
         event.end = end_date
